@@ -18,6 +18,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname,'../public')))
 
 //API routes
+
 app.use('/api/auth',authRoute)
 app.use('/api/chat',chatRoute)
 
