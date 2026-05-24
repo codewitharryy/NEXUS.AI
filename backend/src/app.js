@@ -4,13 +4,13 @@ const authRoute=require('./routes/auth.route')
 const chatRoute=require('./routes/chats.route')
 const cors=require('cors')
 const path=require('path')
-
+const app=express()
 
 //API routes
 
 app.use('/api/auth',authRoute)
 app.use('/api/chat',chatRoute)
-const app=express()
+
 
 //using middlewares
 app.use(cors({
