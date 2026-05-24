@@ -13,8 +13,13 @@ const { v4: uuidv4 } = require("uuid");
 const httpServer = http.createServer(app);
 async function initSocketServer(httpServer) {
   const io = new Server(httpServer, {
-    /* options */
-  });
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    allowHeaders: ["Content-Type","Authorization"],
+    credentials: true,
+  },
+});
 
   // *** user AUthentication middleware for socket connection ***
   io.use(async (socket, next) => {
@@ -36,14 +41,16 @@ async function initSocketServer(httpServer) {
   io.on("connection", (socket) => {
   
     socket.on("ai-message", async (payLoad) => {
-      /*
+      try{
+        /*
         payLoad:{
             chatId:"chatId",
             content: user text message
         }
  */
       // Adding optimization by storing 1.user message,2.generating vector and 3. storing in pinecone vector DB in parallel to reduce latency
-      const [requestMessage,vectors]=await Promise.all([
+    
+  const [requestMessage,vectors]=await Promise.all([
         messageModel.create({
         chat: payLoad.chatId,
         user: socket.user._id,
@@ -133,6 +140,14 @@ messageModel.create({
         },
         messageId: responseMessage._id,
       })
+      }
+      catch(err){
+        console.error("Error processing ai-message:", err);
+        socket.emit("ai-response", {
+          response: "Sorry, something went wrong while processing your message.",
+          chat: payLoad.chatId,
+        });
+      }
     });
   });
 }

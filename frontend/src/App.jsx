@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import AppRoutes from './AppRoutes.jsx'
+
 import './App.css'
-import './theme.css'
+import AppRoutes from './AppRoutes'
 
 function App() {
-  
+
 
   return (
     <>
-       <AppRoutes />
+      <AppRoutes />
     </>
   )
 }
