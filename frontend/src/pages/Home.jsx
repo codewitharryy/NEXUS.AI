@@ -47,7 +47,7 @@ const Home = () => {
     if (title) title = title.trim();
     if (!title) return
 
-    const response = await axios.post("https://nexus-ai-vwya.onrender.com/api/chat/userChats", {
+    const response = await axios.post("https://nexus-ai-vwya.onrender.com/api/chat", {
       title
     }, {
       withCredentials: true
