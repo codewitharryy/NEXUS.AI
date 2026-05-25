@@ -3,10 +3,10 @@ const authMiddleware=require('../middlewares/auth.middleware')
 const chatController=require('../controllers/chat.controller')
 const router=express.Router();
 
-router.post('/userChats',authMiddleware.authUser,chatController.createChat)
+router.post('/',authMiddleware.authUser,chatController.createChat)
 
-router.get('/getChats',authMiddleware.authUser,chatController.getChats)
+router.get('/',authMiddleware.authUser,chatController.getChats)
 
-router.get('/getMessages/:chatId',authMiddleware.authUser,chatController.getMessages)
+router.get('/messages/:id',authMiddleware.authUser,chatController.getMessages)
 
 module.exports=router;

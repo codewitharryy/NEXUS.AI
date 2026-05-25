@@ -6,15 +6,14 @@ const cors=require('cors')
 const path=require('path')
 const app=express()
 
-//API routes
 
-app.use('/api/auth',authRoute)
-app.use('/api/chat',chatRoute)
 
 
 //using middlewares
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:["http://localhost:5173",
+         "https://nexus-ai-vwya.onrender.com"
+    ],
     methods:["GET","POST"],
     credentials:true
 }));
@@ -23,7 +22,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname,'../public')))
 
+//API routes
 
+app.use('/api/auth',authRoute)
+app.use('/api/chat',chatRoute)
 
 app.get("*name",(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/index.html'))
