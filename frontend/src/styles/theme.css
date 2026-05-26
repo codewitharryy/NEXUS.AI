@@ -17,8 +17,6 @@
   /* Elevation */
   --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
 
   /* Typography */
   --font-sans: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
@@ -41,7 +39,6 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
   --transition-fast: 120ms cubic-bezier(.4,0,.2,1);
-  --transition-smooth: 300ms cubic-bezier(.4,0,.2,1);
 }
 
 /* Dark Theme (system preference) */
@@ -59,7 +56,5 @@
     --color-focus-ring: 0 0 0 3px rgba(59,130,246,0.45);
     --shadow-xs: 0 1px 2px rgba(0,0,0,0.6);
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.5);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
   }
 }

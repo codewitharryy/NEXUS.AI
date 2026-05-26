@@ -14,7 +14,7 @@ const httpServer = http.createServer(app);
 async function initSocketServer(httpServer) {
   const io = new Server(httpServer, {
   cors: {
-    origin: ["https://nexus-ai-vwya.onrender.com", "http://localhost:5173"],
+    origin:  "http://localhost:5173",
     methods: ["GET", "POST"],
     allowHeaders: ["Content-Type","Authorization"],
     credentials: true,
@@ -38,6 +38,7 @@ async function initSocketServer(httpServer) {
       next(new Error("Unauthorized,invalid token"));
     }
   });
+
   io.on("connection", (socket) => {
   
     socket.on("ai-message", async (payLoad) => {

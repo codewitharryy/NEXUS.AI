@@ -11,9 +11,7 @@ const app=express()
 
 //using middlewares
 app.use(cors({
-    origin:["http://localhost:5173",
-         "https://nexus-ai-vwya.onrender.com"
-    ],
+    origin:"http://localhost:5173",
     methods:["GET","POST"],
     credentials:true
 }));

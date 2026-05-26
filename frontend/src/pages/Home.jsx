@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { io } from "socket.io-client";
+import ChatMobileBar from '../components/chat/ChatMobileBar.jsx';
 import ChatSidebar from '../components/chat/ChatSidebar.jsx';
 import ChatMessages from '../components/chat/ChatMessages.jsx';
 import ChatComposer from '../components/chat/ChatComposer.jsx';
@@ -95,7 +96,7 @@ const Home = () => {
       type: 'user',
       content: trimmed
     } ];
-  
+
     console.log("New messages:", newMessages);
 
     setMessages(newMessages);
@@ -132,6 +133,10 @@ const Home = () => {
 
 return (
   <div className="chat-layout minimal">
+    <ChatMobileBar
+      onToggleSidebar={() => setSidebarOpen(o => !o)}
+      onNewChat={handleNewChat}
+    />
     <ChatSidebar
       chats={chats}
       activeChatId={activeChatId}
@@ -146,9 +151,9 @@ return (
     <main className="chat-main" role="main">
       {messages.length === 0 && (
         <div className="chat-welcome" aria-hidden="true">
-          <div className="chip">Advanced AI</div>
-          <h1><span className="nexus">Nexus</span><span className="ai-symbol">.</span><span className="ai">AI</span></h1>
-          <p>Meet your intelligent companion. Ask anything, analyze information, brainstorm ideas, or get quick insights. Your conversations are saved in the sidebar for whenever you need them.</p>
+          <div className="chip">Early Preview</div>
+          <h1>ChatGPT Clone</h1>
+          <p>Ask anything. Paste text, brainstorm ideas, or get quick explanations. Your chats stay in the sidebar so you can pick up where you left off.</p>
         </div>
       )}
       <ChatMessages messages={messages} isSending={isSending} />

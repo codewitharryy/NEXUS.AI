@@ -21,7 +21,7 @@ async function createChat(req,res){
 
 async function getChats(req,res){
     const user=req.user;
-    const chats=await chatModel.find({user:user._id}).sort({lastActivity:-1})
+    const chats=await chatModel.find({user:user._id})
     return res.status(200).json({message:"Chats fetched successfully",
     chats:chats.map(chat=>({
         id:chat._id,

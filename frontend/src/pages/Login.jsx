@@ -21,7 +21,7 @@ const Login = () => {
 
         console.log(form);
 
-        axios.post("https://nexus-ai-vwya.onrender.comm/api/auth/login", {
+        axios.post("https://nexus-ai-vwya.onrender.com/api/auth/login", {
             email: form.email,
             password: form.password
         },
@@ -43,8 +43,8 @@ const Login = () => {
         <div className="center-min-h-screen">
             <div className="auth-card" role="main" aria-labelledby="login-heading">
                 <header className="auth-header">
-                    <h1 id="login-heading">Welcome Back</h1>
-                    <p className="auth-sub">Sign in to Nexus<span className="ai-accent">.AI</span> and continue your journey.</p>
+                    <h1 id="login-heading">Sign in</h1>
+                    <p className="auth-sub">Welcome back. We've missed you.</p>
                 </header>
                 <form className="auth-form" onSubmit={handleSubmit} noValidate>
                     <div className="field-group">
