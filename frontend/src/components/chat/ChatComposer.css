@@ -9,9 +9,7 @@
     display: flex;
     justify-content: center;
     background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,0));
-    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-
 }
 
 .composer-surface {
@@ -59,7 +57,6 @@
     font-size: 11px;
     color: #5f6165;
     pointer-events: none;
-    -webkit-user-select: none;
     user-select: none;
     line-height: 1.1;
     font-weight: 500;

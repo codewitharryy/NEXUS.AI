@@ -13,11 +13,6 @@ const chatbotIndex = pc.Index("cohort-chat-gpt");
 async function createMemory({vectors,metadata,messageId}){
      
 
-//   console.log("UPSERT DEBUG:", { 
-//   id: messageId,
-//   vectorLength: vectors?.length,
-//   hasMetadata: !!metadata
-// });
 
 
 await chatbotIndex.upsert([

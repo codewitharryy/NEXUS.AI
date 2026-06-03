@@ -1,65 +1,84 @@
-const userModel=require('../models/user.model');
-const bcrypt=require('bcryptjs')
-const jwt=require('jsonwebtoken')
+const userModel = require('../models/user.model');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-async function userRegister(req,res){
-    //destructure the data from the request body
-const {email,password,fullName:{firstName,lastName}}=req.body;
 
-// check wheteher the user already exists in the database
-const userExists = await userModel.findOne({email});
-if(userExists){
-    return res.status(400).json({message:"User already exists"})
-}
-//hash the password using bcrypt
-const hashPassword=await bcrypt.hash(password,15);
-//create user in database
-const user=await userModel.create({
-    fullName:{firstName,lastName},
-    email:email,
-    password:hashPassword
+async function registerUser(req, res) {
 
-})
-//create token
-const token=jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"1d"})
-//store token in cookie and send response
+    const { fullName: { firstName, lastName }, email, password } = req.body;
 
-res.cookie("token",token)
-res.status(201).json({message:"User registered successfully",
-    user:{
-        fullName:user.fullName,
-        email:user.email,
-        id:user._id
+    const isUserAlreadyExists = await userModel.findOne({ email })
+
+    if (isUserAlreadyExists) {
+        res.status(400).json({ message: "User already exists" });
     }
-})
-}
-async function login(req,res){
-    //destructure the data from the request body
-    const {email,password}=req.body;
-    //check if user is present in the database
-    const user=await userModel.findOne({email});
-    //if not 
-    if(!user){
-       return res.status(404).json({message:"User not found"})
-    }
-    //check password
-    const passCheck=await bcrypt.compare(password,user.password);
-    if(!passCheck){
-        return res.status(400).json({message:"Invalid credentials"})
-    }
-    //create token
-    const token=jwt.sign({id:user._id},process.env.JWT_SECRET_KEY)
-    res.cookie("token",token)
-    res.status(200).json({message:"Login successful",
-        user:{
-            fullName:user.fullName,
-            email:user.email,   
-            id:user._id
+
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+
+    const user = await userModel.create({
+        fullName: {
+            firstName, lastName
+        },
+        email,
+        password: hashPassword
+    })
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+
+
+    res.cookie("token", token)
+
+
+    res.status(201).json({
+        message: "User registered successfully",
+        user: {
+            email: user.email,
+            _id: user._id,
+            fullName: user.fullName
         }
     })
+}
+
+async function loginUser(req, res) {
+
+    const { email, password } = req.body;
+
+    const user = await userModel.findOne({
+        email
+    })
+
+    if (!user) {
+        return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+
+    if (!isPasswordValid) {
+        return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+
+    res.cookie("token", token);
+
+
+    res.status(200).json({
+        message: "user logged in successfully",
+        user: {
+            email: user.email,
+            _id: user._id,
+            fullName: user.fullName
         }
+    })
+
+}
 
 
-
-module.exports={register:userRegister,login:login}
-
+module.exports = {
+    registerUser,
+    loginUser
+}
