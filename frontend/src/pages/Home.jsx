@@ -47,16 +47,20 @@ const Home = () => {
     let title = window.prompt('Enter a title for the new chat:', '');
     if (title) title = title.trim();
     if (!title) return
-
-    const response = await axios.post("https://nexus-ai-vwya.onrender.com/api/chat", {
+try{
+ const response = await axios.post("https://nexus-ai-vwya.onrender.com/api/chat", {
       title
     }, {
       withCredentials: true
     })
-    getMessages(response.data.chat._id);
+    getMessages(response.data.chat.id);
     dispatch(startNewChat(response.data.chat));
     setSidebarOpen(false);
+  }catch(error){
+    console.error("Error creating new chat:", error);
   }
+}
+   
 
   // Ensure at least one chat exists initially
   useEffect(() => {
@@ -118,8 +122,12 @@ const Home = () => {
   }
 
   const getMessages = async (chatId) => {
-
-   const response = await  axios.get(`https://nexus-ai-vwya.onrender.com/api/chat/messages/${chatId}`, { withCredentials: true })
+    if (!chatId || chatId === 'undefined') {
+    console.log("Waiting for valid chatId before fetching messages...");
+    return; // Exit the function early
+  }
+try{
+ const response = await  axios.get(`https://nexus-ai-vwya.onrender.com/api/chat/messages/${chatId}`, { withCredentials: true })
 
    console.log("Fetched messages:", response.data.messages);
 
@@ -127,7 +135,9 @@ const Home = () => {
      type: m.role === 'user' ? 'user' : 'ai',
      content: m.content
    })));
-
+}catch(error){
+  console.error("Error fetching messages:", error);
+} 
   }
 
 

@@ -1,5 +1,6 @@
 const chatModel=require('../models/chat.model')
 const {authUser}=require('../middlewares/auth.middleware')
+const mongoose=require('mongoose')
 
 
 async function createChat(req,res){
@@ -34,7 +35,11 @@ async function getChats(req,res){
 async function getMessages(req,res){
     const {chatId}=req.params;
     const user=req.user;
-    const chat=await chatModel.findOne({_id:chatId,user:user._id}).populate({
+    if(!mongoose.Types.ObjectId.isValid(chatId)||!chatId||chatId==='undefined'){
+        return res.status(400).json({message:"Invalid chatId"})
+    }
+    try{
+ const chat=await chatModel.findOne({_id:chatId,user:user._id}).populate({
         path: "messages",
         options: { sort: { createdAt: 1 } },
     });
@@ -49,6 +54,11 @@ async function getMessages(req,res){
         createdAt:message.createdAt
     }))
 })
+    }catch(error){
+        console.error("Error fetching messages:", error);
+        return res.status(500).json({message:"Internal server error"})
+    }
+   
 }
 module.exports={createChat,getChats,getMessages}
 

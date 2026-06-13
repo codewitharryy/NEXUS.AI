@@ -29,7 +29,7 @@ return response.text;
  
 async function generateVector(content){
     const response = await ai.models.embedContent({
-       model: "gemini-embedding-001",
+       model: "text-embedding-004",
     contents:content,
      config:{
         outputDimensionality: 768

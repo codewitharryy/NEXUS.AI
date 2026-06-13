@@ -21,9 +21,9 @@ const chatSlice = createSlice({
         },
         startNewChat: {
             reducer(state, action) {
-                const { _id, title } = action.payload;
-                state.chats.unshift({ _id, title: title || 'New Chat', messages: [] });
-                state.activeChatId = _id;
+                const { id, title } = action.payload;
+                state.chats.unshift({ id, title: title || 'New Chat', messages: [] });
+                state.activeChatId = id;
             }
         },
         selectChat(state, action) {

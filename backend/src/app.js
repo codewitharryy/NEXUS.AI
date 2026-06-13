@@ -15,7 +15,7 @@ const app = express();
 
 /* using middlewares */
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://nexus-ai-vwya.onrender.com'],
     credentials: true
 }))
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 
 
-app.get("*name", (req, res) => {
+app.get(/(.*)/, (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
