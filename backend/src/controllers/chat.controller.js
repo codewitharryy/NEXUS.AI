@@ -33,7 +33,7 @@ async function getChats(req,res){
 })
 }
 async function getMessages(req,res){
-    const {chatId}=req.params;
+    const {id:chatId}=req.params;
     const user=req.user;
     if(!mongoose.Types.ObjectId.isValid(chatId)||!chatId||chatId==='undefined'){
         return res.status(400).json({message:"Invalid chatId"})
