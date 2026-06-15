@@ -122,10 +122,11 @@ try{
   }
 
   const getMessages = async (chatId) => {
-    if (!chatId || chatId === 'undefined') {
-    console.log("Waiting for valid chatId before fetching messages...");
-    return; // Exit the function early
-  }
+   // FIX: Verify it is a valid 24-character MongoDB ObjectId
+    if (!chatId || chatId === 'undefined' || String(chatId).length !== 24) {
+      console.log("Waiting for a valid MongoDB ID...");
+      return; 
+    }
 try{
  const response = await  axios.get(`https://nexus-ai-vwya.onrender.com/api/chat/messages/${chatId}`, { withCredentials: true })
 

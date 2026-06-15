@@ -44,7 +44,8 @@ function initSocketServer(httpServer) {
     io.on("connection", (socket) => {
         socket.on("ai-message", async (messagePayload) => {
             /* messagePayload = { chat:chatId,content:message text } */
-            const [ message, vectors ] = await Promise.all([
+            try{
+ const [ message, vectors ] = await Promise.all([
                 messageModel.create({
                     chat: messagePayload.chat,
                     user: socket.user._id,
@@ -132,6 +133,14 @@ function initSocketServer(httpServer) {
                 }
             })
 
+            }catch(error){
+                console.error("Error processing AI message:", error);
+                socket.emit('ai-response', {
+                    content: "Sorry, there was an error processing your message.",
+                    chat: messagePayload.chat
+                })
+            }
+           
         })
 
     })
